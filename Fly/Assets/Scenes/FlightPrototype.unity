@@ -192,6 +192,10 @@ MonoBehaviour:
   clearRadius: 3
   goldTimeSeconds: 13
   silverTimeSeconds: 18
+  resetPenaltySeconds: 3
+  collisionRadius: 0.4
+  courseMin: {x: -50, y: 1, z: -15}
+  courseMax: {x: 50, y: 35, z: 100}
 --- !u!1 &92807053
 GameObject:
   m_ObjectHideFlags: 0
@@ -6308,6 +6312,7 @@ MonoBehaviour:
   medalValue: {fileID: 2100000272}
   finalTimeValue: {fileID: 2100000282}
   thresholdValue: {fileID: 2100000292}
+  controlsText: {fileID: 2100000202}
   medalImage: {fileID: 2100000262}
   retryButton: {fileID: 2100000304}
   goldMedal: {fileID: 21300000, guid: 354350de6eab462c94dd40c38f99ef99, type: 3}
@@ -7127,7 +7132,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "A / D STEER   W / S CLIMB   SPACE FLAP\nR RESTART"
+  m_Text: "A / D STEER   W / S CLIMB   SPACE FLAP\nR CHECKPOINT"
 --- !u!1 &2100000210
 GameObject:
   m_ObjectHideFlags: 0

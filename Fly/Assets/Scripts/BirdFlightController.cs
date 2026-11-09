@@ -79,7 +79,12 @@ public class BirdFlightController : MonoBehaviour
 
     public void ResetFlight()
     {
-        transform.SetPositionAndRotation(startPosition, startRotation);
+        RespawnAt(startPosition, startRotation);
+    }
+
+    public void RespawnAt(Vector3 position, Quaternion rotation)
+    {
+        transform.SetPositionAndRotation(position, rotation);
         pitchAngle = 0f;
         flapVelocity = 0f;
         nextFlapTime = 0f;

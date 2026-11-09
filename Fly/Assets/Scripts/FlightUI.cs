@@ -16,6 +16,7 @@ public class FlightUI : MonoBehaviour
     [SerializeField] private Text medalValue;
     [SerializeField] private Text finalTimeValue;
     [SerializeField] private Text thresholdValue;
+    [SerializeField] private Text controlsText;
     [SerializeField] private Image medalImage;
     [SerializeField] private Sprite goldMedal;
     [SerializeField] private Sprite silverMedal;
@@ -26,9 +27,12 @@ public class FlightUI : MonoBehaviour
     private int displayedRing;
     private float progressChangedAt;
     private float resultsShownAt;
+    private float recoveryMessageUntil;
+    private string defaultControlsText;
 
     private void Awake()
     {
+        if (controlsText != null) defaultControlsText = controlsText.text;
         retryButton.onClick.AddListener(OnRetryClicked);
         resultsRoot.SetActive(false);
         EnsureEventSystem();
@@ -41,6 +45,9 @@ public class FlightUI : MonoBehaviour
 
     private void Update()
     {
+        if (recoveryMessageUntil > 0f && Time.unscaledTime >= recoveryMessageUntil)
+            ClearRecoveryMessage();
+
         if (hudRoot.activeSelf)
         {
             float elapsed = Time.unscaledTime - progressChangedAt;
@@ -77,6 +84,7 @@ public class FlightUI : MonoBehaviour
 
     public void ShowResults(float finalTimeSeconds, string medal, float goldTimeSeconds, float silverTimeSeconds)
     {
+        ClearRecoveryMessage();
         hudRoot.SetActive(false);
         resultsRoot.SetActive(true);
         medalValue.text = $"{medal.ToUpperInvariant()} MEDAL";
@@ -86,6 +94,19 @@ public class FlightUI : MonoBehaviour
         resultsShownAt = Time.unscaledTime;
         resultsGroup.alpha = 0f;
         resultCard.localScale = Vector3.one * 0.82f;
+    }
+
+    public void ShowRecovery(float penaltySeconds)
+    {
+        if (controlsText == null) return;
+        controlsText.text = $"BACK TO CHECKPOINT   +{penaltySeconds:F0}s\nR RETURN TO CHECKPOINT";
+        recoveryMessageUntil = Time.unscaledTime + 2.5f;
+    }
+
+    public void ClearRecoveryMessage()
+    {
+        recoveryMessageUntil = 0f;
+        if (controlsText != null) controlsText.text = defaultControlsText;
     }
 
     private void OnRetryClicked()
