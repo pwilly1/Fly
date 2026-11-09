@@ -6,6 +6,8 @@ public class RingGoal : MonoBehaviour
     [SerializeField] private Transform bird;
     [SerializeField] private Transform[] rings;
     [SerializeField] private float clearRadius = 3f;
+    [SerializeField] private float goldTimeSeconds = 13f;
+    [SerializeField] private float silverTimeSeconds = 18f;
 
     private Vector3 previousBirdPosition;
     private BirdFlightController flightController;
@@ -43,7 +45,10 @@ public class RingGoal : MonoBehaviour
         {
             nextRingIndex++;
             if (nextRingIndex == rings.Length)
+            {
                 finishTimeSeconds = Time.time - runStartedAt;
+                if (flightController != null) flightController.StopFlight();
+            }
         }
 
         previousBirdPosition = currentPosition;
@@ -73,18 +78,60 @@ public class RingGoal : MonoBehaviour
     {
         if (rings == null || rings.Length == 0) return;
 
+        if (nextRingIndex == rings.Length)
+        {
+            DrawResults();
+            return;
+        }
+
         GUIStyle messageStyle = new GUIStyle(GUI.skin.box);
         messageStyle.alignment = TextAnchor.MiddleCenter;
         messageStyle.fontSize = Mathf.Clamp(Screen.height / 35, 16, 22);
         messageStyle.normal.textColor = Color.white;
 
-        bool finished = nextRingIndex == rings.Length;
-        float elapsedSeconds = finished ? finishTimeSeconds : Time.time - runStartedAt;
-        string status = finished
-            ? "Course complete!"
-            : $"Ring {nextRingIndex + 1}/{rings.Length} - fly through it";
-        string message = $"{status}\nTime: {elapsedSeconds:F1}s  |  R to restart";
+        float elapsedSeconds = Time.time - runStartedAt;
+        string message = $"Next: Ring {nextRingIndex + 1} of {rings.Length}\nTime: {elapsedSeconds:F1}s  |  R to restart";
         float width = Mathf.Min(Screen.width - 24f, 540f);
         GUI.Box(new Rect((Screen.width - width) / 2f, 18f, width, 70f), message, messageStyle);
+    }
+
+    private void DrawResults()
+    {
+        float width = Mathf.Min(Screen.width - 32f, 460f);
+        Rect panel = new Rect((Screen.width - width) / 2f, (Screen.height - 210f) / 2f, width, 210f);
+        GUI.Box(panel, "");
+
+        GUIStyle titleStyle = new GUIStyle(GUI.skin.label);
+        titleStyle.alignment = TextAnchor.MiddleCenter;
+        titleStyle.fontSize = 26;
+        titleStyle.normal.textColor = Color.white;
+
+        GUIStyle medalStyle = new GUIStyle(titleStyle);
+        medalStyle.fontSize = 32;
+        string medal;
+        if (finishTimeSeconds <= goldTimeSeconds)
+        {
+            medal = "GOLD MEDAL";
+            medalStyle.normal.textColor = new Color(1f, 0.82f, 0.2f);
+        }
+        else if (finishTimeSeconds <= silverTimeSeconds)
+        {
+            medal = "SILVER MEDAL";
+            medalStyle.normal.textColor = new Color(0.83f, 0.88f, 0.95f);
+        }
+        else
+        {
+            medal = "BRONZE MEDAL";
+            medalStyle.normal.textColor = new Color(0.8f, 0.5f, 0.25f);
+        }
+
+        GUIStyle detailStyle = new GUIStyle(titleStyle);
+        detailStyle.fontSize = 18;
+
+        GUI.Label(new Rect(panel.x, panel.y + 12f, width, 36f), "Course complete!", titleStyle);
+        GUI.Label(new Rect(panel.x, panel.y + 52f, width, 44f), medal, medalStyle);
+        GUI.Label(new Rect(panel.x, panel.y + 100f, width, 28f), $"Final time: {finishTimeSeconds:F1}s", detailStyle);
+        GUI.Label(new Rect(panel.x, panel.y + 132f, width, 28f), $"Gold <= {goldTimeSeconds:F0}s   Silver <= {silverTimeSeconds:F0}s", detailStyle);
+        GUI.Label(new Rect(panel.x, panel.y + 168f, width, 28f), "Press R to try again", detailStyle);
     }
 }

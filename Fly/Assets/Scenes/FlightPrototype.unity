@@ -189,6 +189,8 @@ MonoBehaviour:
   - {fileID: 2000000001}
   - {fileID: 2000001001}
   clearRadius: 3
+  goldTimeSeconds: 13
+  silverTimeSeconds: 18
 --- !u!1 &92807053
 GameObject:
   m_ObjectHideFlags: 0

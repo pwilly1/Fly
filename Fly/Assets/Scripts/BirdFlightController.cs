@@ -19,6 +19,7 @@ public class BirdFlightController : MonoBehaviour
     private Vector3 startPosition;
     private Quaternion startRotation;
     private Quaternion startVisualRotation;
+    private bool isFlying = true;
 
     private void Awake()
     {
@@ -29,6 +30,8 @@ public class BirdFlightController : MonoBehaviour
 
     private void Update()
     {
+        if (!isFlying) return;
+
         float steer = 0f;
         float pitch = 0f;
         Keyboard keyboard = Keyboard.current;
@@ -81,5 +84,12 @@ public class BirdFlightController : MonoBehaviour
         flapVelocity = 0f;
         nextFlapTime = 0f;
         if (visual != null) visual.localRotation = startVisualRotation;
+        isFlying = true;
+    }
+
+    public void StopFlight()
+    {
+        isFlying = false;
+        flapVelocity = 0f;
     }
 }
