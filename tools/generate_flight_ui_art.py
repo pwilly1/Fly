@@ -4,7 +4,7 @@ import math
 import uuid
 
 # Pillow is needed only to regenerate the artwork.
-OUT = Path(__file__).resolve().parent.parent / 'Fly/Assets/Resources/UI'
+OUT = Path(__file__).resolve().parent.parent / 'Fly/Assets/UI'
 OUT.mkdir(parents=True, exist_ok=True)
 SCALE = 3
 NAVY = (38, 84, 101, 255)
