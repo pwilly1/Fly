@@ -10,9 +10,12 @@ public class RingGoal : MonoBehaviour
     private Vector3 previousBirdPosition;
     private BirdFlightController flightController;
     private int nextRingIndex;
+    private float runStartedAt;
+    private float finishTimeSeconds;
 
     private void Start()
     {
+        runStartedAt = Time.time;
         if (bird != null)
         {
             previousBirdPosition = bird.position;
@@ -29,13 +32,19 @@ public class RingGoal : MonoBehaviour
         {
             if (flightController != null) flightController.ResetFlight();
             nextRingIndex = 0;
+            runStartedAt = Time.time;
+            finishTimeSeconds = 0f;
             previousBirdPosition = bird.position;
             return;
         }
 
         Vector3 currentPosition = bird.position;
         if (nextRingIndex < rings.Length && CrossedRing(rings[nextRingIndex], currentPosition))
+        {
             nextRingIndex++;
+            if (nextRingIndex == rings.Length)
+                finishTimeSeconds = Time.time - runStartedAt;
+        }
 
         previousBirdPosition = currentPosition;
     }
@@ -69,10 +78,13 @@ public class RingGoal : MonoBehaviour
         messageStyle.fontSize = Mathf.Clamp(Screen.height / 35, 16, 22);
         messageStyle.normal.textColor = Color.white;
 
-        string message = nextRingIndex == rings.Length
-            ? "Course complete! Press R to restart"
-            : $"Ring {nextRingIndex + 1}/{rings.Length} - fly through it (R to restart)";
+        bool finished = nextRingIndex == rings.Length;
+        float elapsedSeconds = finished ? finishTimeSeconds : Time.time - runStartedAt;
+        string status = finished
+            ? "Course complete!"
+            : $"Ring {nextRingIndex + 1}/{rings.Length} - fly through it";
+        string message = $"{status}\nTime: {elapsedSeconds:F1}s  |  R to restart";
         float width = Mathf.Min(Screen.width - 24f, 540f);
-        GUI.Box(new Rect((Screen.width - width) / 2f, 18f, width, 54f), message, messageStyle);
+        GUI.Box(new Rect((Screen.width - width) / 2f, 18f, width, 70f), message, messageStyle);
     }
 }
