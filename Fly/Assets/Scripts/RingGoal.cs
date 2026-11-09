@@ -1,48 +1,78 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class RingGoal : MonoBehaviour
 {
     [SerializeField] private Transform bird;
+    [SerializeField] private Transform[] rings;
     [SerializeField] private float clearRadius = 3f;
 
     private Vector3 previousBirdPosition;
-    private bool cleared;
+    private BirdFlightController flightController;
+    private int nextRingIndex;
 
     private void Start()
     {
         if (bird != null)
+        {
             previousBirdPosition = bird.position;
+            flightController = bird.GetComponent<BirdFlightController>();
+        }
     }
 
     private void LateUpdate()
     {
-        if (bird == null || cleared) return;
+        if (bird == null || rings == null || rings.Length == 0) return;
+
+        Keyboard keyboard = Keyboard.current;
+        if (keyboard != null && keyboard.rKey.wasPressedThisFrame)
+        {
+            if (flightController != null) flightController.ResetFlight();
+            nextRingIndex = 0;
+            previousBirdPosition = bird.position;
+            return;
+        }
 
         Vector3 currentPosition = bird.position;
-        float previousDistance = Vector3.Dot(previousBirdPosition - transform.position, transform.forward);
-        float currentDistance = Vector3.Dot(currentPosition - transform.position, transform.forward);
+        if (nextRingIndex < rings.Length && CrossedRing(rings[nextRingIndex], currentPosition))
+            nextRingIndex++;
+
+        previousBirdPosition = currentPosition;
+    }
+
+    private bool CrossedRing(Transform ring, Vector3 currentPosition)
+    {
+        if (ring == null) return false;
+
+        float previousDistance = Vector3.Dot(previousBirdPosition - ring.position, ring.forward);
+        float currentDistance = Vector3.Dot(currentPosition - ring.position, ring.forward);
 
         if (previousDistance < 0f && currentDistance >= 0f)
         {
             float crossingFraction = -previousDistance / (currentDistance - previousDistance);
             Vector3 crossingPoint = Vector3.Lerp(previousBirdPosition, currentPosition, crossingFraction);
-            Vector3 localPoint = transform.InverseTransformPoint(crossingPoint);
+            Vector3 localPoint = ring.InverseTransformPoint(crossingPoint);
 
             if (new Vector2(localPoint.x, localPoint.y).sqrMagnitude <= clearRadius * clearRadius)
-                cleared = true;
+                return true;
         }
 
-        previousBirdPosition = currentPosition;
+        return false;
     }
 
     private void OnGUI()
     {
+        if (rings == null || rings.Length == 0) return;
+
         GUIStyle messageStyle = new GUIStyle(GUI.skin.box);
         messageStyle.alignment = TextAnchor.MiddleCenter;
-        messageStyle.fontSize = Mathf.Clamp(Screen.height / 28, 18, 30);
+        messageStyle.fontSize = Mathf.Clamp(Screen.height / 35, 16, 22);
         messageStyle.normal.textColor = Color.white;
 
-        string message = cleared ? "Ring cleared!" : "Fly through the gold ring";
-        GUI.Box(new Rect(Screen.width / 2f - 190f, 18f, 380f, 54f), message, messageStyle);
+        string message = nextRingIndex == rings.Length
+            ? "Course complete! Press R to restart"
+            : $"Ring {nextRingIndex + 1}/{rings.Length} - fly through it (R to restart)";
+        float width = Mathf.Min(Screen.width - 24f, 540f);
+        GUI.Box(new Rect((Screen.width - width) / 2f, 18f, width, 54f), message, messageStyle);
     }
 }

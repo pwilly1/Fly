@@ -16,6 +16,16 @@ public class BirdFlightController : MonoBehaviour
     private float pitchAngle;
     private float flapVelocity;
     private float nextFlapTime;
+    private Vector3 startPosition;
+    private Quaternion startRotation;
+    private Quaternion startVisualRotation;
+
+    private void Awake()
+    {
+        startPosition = transform.position;
+        startRotation = transform.rotation;
+        if (visual != null) startVisualRotation = visual.localRotation;
+    }
 
     private void Update()
     {
@@ -62,5 +72,14 @@ public class BirdFlightController : MonoBehaviour
     public void SetVisual(Transform birdVisual)
     {
         visual = birdVisual;
+    }
+
+    public void ResetFlight()
+    {
+        transform.SetPositionAndRotation(startPosition, startRotation);
+        pitchAngle = 0f;
+        flapVelocity = 0f;
+        nextFlapTime = 0f;
+        if (visual != null) visual.localRotation = startVisualRotation;
     }
 }
