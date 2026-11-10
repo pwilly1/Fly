@@ -1549,8 +1549,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FollowCamera
   target: {fileID: 1983064935}
-  distance: 5.5
-  height: 2.4
+  distance: 3
+  height: 1.3
   lookAhead: 4
   followSharpness: 7
 --- !u!81 &1281733043
