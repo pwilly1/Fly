@@ -2500,7 +2500,8 @@ MonoBehaviour:
   maxVerticalSpeed: 6.5
   flapCooldown: 0.7
   visual: {fileID: 1225790624}
-  bankAngle: 20
+  bankAngle: 28
+  turnDipAngle: 4
 --- !u!1 &1994586393
 GameObject:
   m_ObjectHideFlags: 0

@@ -27,7 +27,8 @@ public class BirdFlightController : MonoBehaviour
 
     [Header("Visual")]
     [SerializeField] private Transform visual;
-    [SerializeField] private float bankAngle = 20f;
+    [SerializeField] private float bankAngle = 28f;
+    [SerializeField] private float turnDipAngle = 4f;
 
     private float pitchAngle;
     private float pitchInput;
@@ -41,6 +42,7 @@ public class BirdFlightController : MonoBehaviour
     private Quaternion startVisualRotation;
     private BirdWingMotion wingMotion;
     private Animator birdAnimator;
+    private BirdFlightAudio flightAudio;
     private bool isFlying = true;
 
     private void Awake()
@@ -55,6 +57,8 @@ public class BirdFlightController : MonoBehaviour
         if (visual != null && visual.GetComponentInChildren<SkinnedMeshRenderer>() == null
             && visual.GetComponent<BirdMeshBinder>() == null)
             visual.gameObject.AddComponent<BirdMeshBinder>();
+        flightAudio = GetComponent<BirdFlightAudio>();
+        if (flightAudio == null) flightAudio = gameObject.AddComponent<BirdFlightAudio>();
     }
 
     private void Update()
@@ -78,6 +82,7 @@ public class BirdFlightController : MonoBehaviour
                 nextFlapTime = Time.time + flapCooldown;
                 if (wingMotion != null) wingMotion.Flap();
                 if (birdAnimator != null) birdAnimator.SetTrigger("Flap");
+                if (flightAudio != null) flightAudio.PlayFlap();
             }
         }
 
@@ -98,6 +103,8 @@ public class BirdFlightController : MonoBehaviour
         float targetSpeed = forwardSpeed - climb * climbSpeedPenalty + dive * diveSpeedBonus;
         currentForwardSpeed = Mathf.MoveTowards(
             currentForwardSpeed, targetSpeed, speedAcceleration * deltaTime);
+        if (flightAudio != null)
+            flightAudio.UpdateWind(currentForwardSpeed, forwardSpeed, diveSpeedBonus);
 
         float sinkRate = Mathf.Clamp(
             glideSinkRate + (forwardSpeed - currentForwardSpeed) * lowSpeedSinkMultiplier,
@@ -113,11 +120,12 @@ public class BirdFlightController : MonoBehaviour
         if (visual != null)
         {
             float bankAmount = turnRate / Mathf.Max(turnSpeed, 0.01f);
-            Quaternion bank = Quaternion.Euler(0f, 0f, -bankAmount * bankAngle);
+            Quaternion bank = Quaternion.Euler(
+                Mathf.Abs(bankAmount) * turnDipAngle, 0f, -bankAmount * bankAngle);
             visual.localRotation = Quaternion.Slerp(
                 visual.localRotation,
                 bank,
-                1f - Mathf.Exp(-8f * Time.deltaTime));
+                1f - Mathf.Exp(-8f * deltaTime));
         }
     }
 
@@ -143,6 +151,7 @@ public class BirdFlightController : MonoBehaviour
         verticalVelocity = 0f;
         travelDirection = transform.forward;
         nextFlapTime = 0f;
+        if (flightAudio != null) flightAudio.ResumeWind();
         if (wingMotion != null) wingMotion.ResetMotion();
         if (birdAnimator != null)
         {
@@ -157,5 +166,6 @@ public class BirdFlightController : MonoBehaviour
     {
         isFlying = false;
         verticalVelocity = 0f;
+        if (flightAudio != null) flightAudio.StopWind();
     }
 }
