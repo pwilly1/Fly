@@ -2485,10 +2485,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::BirdFlightController
   forwardSpeed: 8
   turnSpeed: 95
+  turnAcceleration: 280
+  headingResponse: 7
   pitchSpeed: 65
+  pitchInputResponse: 5
   maxPitchAngle: 35
+  speedAcceleration: 2.5
+  climbSpeedPenalty: 3
+  diveSpeedBonus: 3.5
+  glideSinkRate: 0.8
+  lowSpeedSinkMultiplier: 0.75
+  glideGravity: 5
   flapImpulse: 5
-  flapDecay: 9
+  maxVerticalSpeed: 6.5
   flapCooldown: 0.7
   visual: {fileID: 1225790624}
   bankAngle: 20
