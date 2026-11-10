@@ -299,6 +299,7 @@ GameObject:
   - component: {fileID: 168868445}
   - component: {fileID: 168868444}
   - component: {fileID: 3000000990}
+  - component: {fileID: 3000000991}
   m_Layer: 0
   m_Name: Bird Visual
   m_TagString: Untagged
@@ -8213,7 +8214,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3000000010}
-  m_Mesh: {fileID: 4300000, guid: c201c9123afb511bbe0e6589590dee46, type: 3}
+  m_Mesh: {fileID: 0}
 --- !u!1 &3000000020
 GameObject:
   m_ObjectHideFlags: 0
@@ -8303,7 +8304,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3000000020}
-  m_Mesh: {fileID: 4300000, guid: 85eb2e08fe57503da931ad2e78e39d27, type: 3}
+  m_Mesh: {fileID: 0}
 --- !u!1 &3000000030
 GameObject:
   m_ObjectHideFlags: 0
@@ -8393,7 +8394,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3000000030}
-  m_Mesh: {fileID: 4300000, guid: 9faa7f3936615a92a0bad3c310efcf1c, type: 3}
+  m_Mesh: {fileID: 0}
 --- !u!1 &3000000050
 GameObject:
   m_ObjectHideFlags: 0
@@ -8483,7 +8484,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3000000050}
-  m_Mesh: {fileID: 4300000, guid: 1f0898e1cb0753f1a52a90d4de9062c9, type: 3}
+  m_Mesh: {fileID: 0}
 --- !u!1 &3000000060
 GameObject:
   m_ObjectHideFlags: 0
@@ -8573,7 +8574,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3000000060}
-  m_Mesh: {fileID: 4300000, guid: fe411a3965d954b896c1fb7cc9329f0e, type: 3}
+  m_Mesh: {fileID: 0}
 --- !u!1 &3000000070
 GameObject:
   m_ObjectHideFlags: 0
@@ -8663,7 +8664,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3000000070}
-  m_Mesh: {fileID: 4300000, guid: d1ae4ef1709c5179933b8490f041898d, type: 3}
+  m_Mesh: {fileID: 0}
 --- !u!1 &3000000080
 GameObject:
   m_ObjectHideFlags: 0
@@ -8753,7 +8754,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3000000080}
-  m_Mesh: {fileID: 4300000, guid: 43a1be0dd9ec5e88b7d93f91240b7a74, type: 3}
+  m_Mesh: {fileID: 0}
 --- !u!1 &3000000090
 GameObject:
   m_ObjectHideFlags: 0
@@ -8843,7 +8844,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3000000090}
-  m_Mesh: {fileID: 4300000, guid: 41ce76f53005594eb5cf0a3aee1b4f7f, type: 3}
+  m_Mesh: {fileID: 0}
 --- !u!1 &3000000100
 GameObject:
   m_ObjectHideFlags: 0
@@ -8933,7 +8934,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3000000100}
-  m_Mesh: {fileID: 4300000, guid: 991b03fe2913536c86b9138e7dd4acbc, type: 3}
+  m_Mesh: {fileID: 0}
 --- !u!1 &3000000110
 GameObject:
   m_ObjectHideFlags: 0
@@ -9023,7 +9024,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3000000110}
-  m_Mesh: {fileID: 4300000, guid: 0f2cc748d6ef58df8ab698057cca569a, type: 3}
+  m_Mesh: {fileID: 0}
 --- !u!1 &3000000120
 GameObject:
   m_ObjectHideFlags: 0
@@ -9113,7 +9114,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3000000120}
-  m_Mesh: {fileID: 4300000, guid: 51ba599dd86c587683672a1850bb6a8d, type: 3}
+  m_Mesh: {fileID: 0}
 --- !u!1 &3000000130
 GameObject:
   m_ObjectHideFlags: 0
@@ -9203,7 +9204,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3000000130}
-  m_Mesh: {fileID: 4300000, guid: e9c21f389adc578caa19c51f4c42429f, type: 3}
+  m_Mesh: {fileID: 0}
 --- !u!1 &3000000140
 GameObject:
   m_ObjectHideFlags: 0
@@ -9293,7 +9294,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3000000140}
-  m_Mesh: {fileID: 4300000, guid: a90ae9a30a905ca8827ed554cd7bf67f, type: 3}
+  m_Mesh: {fileID: 0}
 --- !u!114 &3000000990
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9308,6 +9309,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::BirdWingMotion
   leftWing: {fileID: 3000000001}
   rightWing: {fileID: 3000000041}
+--- !u!114 &3000000991
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 168868442}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b8ea94ef3a045bb880447856f51d384b, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: Assembly-CSharp::BirdMeshBinder
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

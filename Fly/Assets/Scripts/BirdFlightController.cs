@@ -28,6 +28,8 @@ public class BirdFlightController : MonoBehaviour
         startRotation = transform.rotation;
         if (visual != null) startVisualRotation = visual.localRotation;
         if (visual != null) wingMotion = visual.GetComponent<BirdWingMotion>();
+        if (visual != null && visual.GetComponent<BirdMeshBinder>() == null)
+            visual.gameObject.AddComponent<BirdMeshBinder>();
     }
 
     private void Update()

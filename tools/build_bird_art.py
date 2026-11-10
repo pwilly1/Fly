@@ -14,7 +14,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 ASSETS = ROOT / "Fly" / "Assets"
-MESH_DIR = ASSETS / "BirdArt"
+MESH_DIR = ASSETS / "Resources" / "BirdArt"
 MATERIAL_DIR = ASSETS / "Materials" / "Bird"
 SCENE = ASSETS / "Scenes" / "FlightPrototype.unity"
 SOURCE_MATERIAL = ASSETS / "Materials" / "PrototypeBird.mat"
@@ -193,7 +193,7 @@ def guid_for(name):
 def write_assets(meshes):
     MESH_DIR.mkdir(parents=True, exist_ok=True)
     MATERIAL_DIR.mkdir(parents=True, exist_ok=True)
-    for folder in (MESH_DIR, MATERIAL_DIR):
+    for folder in (MESH_DIR.parent, MESH_DIR, MATERIAL_DIR):
         meta = folder.with_name(folder.name + ".meta")
         if not meta.exists():
             meta.write_text(f"fileFormatVersion: 2\nguid: {guid_for(str(folder.relative_to(ASSETS)))}\nfolderAsset: yes\nDefaultImporter:\n  externalObjects: {{}}\n  userData:\n  assetBundleName:\n  assetBundleVariant:\n")
@@ -316,7 +316,9 @@ def wire_scene(meshes):
         docs.append(rendered)
         filtered = filter_template.replace("&168868446", f"&{mesh_filter}")
         filtered = filtered.replace("m_GameObject: {fileID: 168868442}", f"m_GameObject: {{fileID: {go}}}")
-        filtered = re.sub(r"m_Mesh: \{[^}]+\}", f"m_Mesh: {{fileID: 4300000, guid: {guid_for('mesh-' + part)}, type: 3}}", filtered)
+        # Unity assigns model subasset IDs during import; the binder resolves
+        # each imported mesh by its Resources path instead of guessing an ID.
+        filtered = re.sub(r"m_Mesh: \{[^}]+\}", "m_Mesh: {fileID: 0}", filtered)
         docs.append(filtered)
 
     visual_transform = re.search(r"--- !u!4 &168868443\nTransform:\n.*?(?=--- !u!)", scene, re.S).group()
@@ -326,7 +328,7 @@ def wire_scene(meshes):
     # Component is on the existing visual object; the two pivots stay editable.
     visual_go = re.search(r"--- !u!1 &168868442\nGameObject:\n.*?(?=--- !u!)", scene, re.S).group()
     scene = scene.replace(visual_go, visual_go.replace("  - component: {fileID: 168868444}",
-                         "  - component: {fileID: 168868444}\n  - component: {fileID: 3000000990}"))
+                         "  - component: {fileID: 168868444}\n  - component: {fileID: 3000000990}\n  - component: {fileID: 3000000991}"))
     docs.append(f"""--- !u!114 &3000000990
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -341,6 +343,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::BirdWingMotion
   leftWing: {{fileID: {wing_pivots['left']}}}
   rightWing: {{fileID: {wing_pivots['right']}}}
+""")
+    docs.append(f"""--- !u!114 &3000000991
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {{fileID: 0}}
+  m_PrefabInstance: {{fileID: 0}}
+  m_PrefabAsset: {{fileID: 0}}
+  m_GameObject: {{fileID: 168868442}}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {{fileID: 11500000, guid: {guid_for('BirdMeshBinder.cs')}, type: 3}}
+  m_Name:
+  m_EditorClassIdentifier: Assembly-CSharp::BirdMeshBinder
 """)
 
     roots = "--- !u!1660057539 &9223372036854775807"
