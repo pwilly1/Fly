@@ -20,6 +20,7 @@ public class BirdFlightController : MonoBehaviour
     private Quaternion startRotation;
     private Quaternion startVisualRotation;
     private BirdWingMotion wingMotion;
+    private Animator birdAnimator;
     private bool isFlying = true;
 
     private void Awake()
@@ -28,7 +29,9 @@ public class BirdFlightController : MonoBehaviour
         startRotation = transform.rotation;
         if (visual != null) startVisualRotation = visual.localRotation;
         if (visual != null) wingMotion = visual.GetComponent<BirdWingMotion>();
-        if (visual != null && visual.GetComponent<BirdMeshBinder>() == null)
+        if (visual != null) birdAnimator = visual.GetComponent<Animator>();
+        if (visual != null && visual.GetComponentInChildren<SkinnedMeshRenderer>() == null
+            && visual.GetComponent<BirdMeshBinder>() == null)
             visual.gameObject.AddComponent<BirdMeshBinder>();
     }
 
@@ -52,6 +55,7 @@ public class BirdFlightController : MonoBehaviour
                 flapVelocity = flapImpulse;
                 nextFlapTime = Time.time + flapCooldown;
                 if (wingMotion != null) wingMotion.Flap();
+                if (birdAnimator != null) birdAnimator.SetTrigger("Flap");
             }
         }
 
@@ -81,6 +85,7 @@ public class BirdFlightController : MonoBehaviour
     {
         visual = birdVisual;
         wingMotion = visual != null ? visual.GetComponent<BirdWingMotion>() : null;
+        birdAnimator = visual != null ? visual.GetComponent<Animator>() : null;
     }
 
     public void ResetFlight()
@@ -95,6 +100,11 @@ public class BirdFlightController : MonoBehaviour
         flapVelocity = 0f;
         nextFlapTime = 0f;
         if (wingMotion != null) wingMotion.ResetMotion();
+        if (birdAnimator != null)
+        {
+            birdAnimator.ResetTrigger("Flap");
+            birdAnimator.Play("Glide", 0, 0f);
+        }
         if (visual != null) visual.localRotation = startVisualRotation;
         isFlying = true;
     }
