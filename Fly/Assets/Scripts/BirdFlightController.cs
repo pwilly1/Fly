@@ -19,6 +19,7 @@ public class BirdFlightController : MonoBehaviour
     private Vector3 startPosition;
     private Quaternion startRotation;
     private Quaternion startVisualRotation;
+    private BirdWingMotion wingMotion;
     private bool isFlying = true;
 
     private void Awake()
@@ -26,6 +27,7 @@ public class BirdFlightController : MonoBehaviour
         startPosition = transform.position;
         startRotation = transform.rotation;
         if (visual != null) startVisualRotation = visual.localRotation;
+        if (visual != null) wingMotion = visual.GetComponent<BirdWingMotion>();
     }
 
     private void Update()
@@ -47,6 +49,7 @@ public class BirdFlightController : MonoBehaviour
             {
                 flapVelocity = flapImpulse;
                 nextFlapTime = Time.time + flapCooldown;
+                if (wingMotion != null) wingMotion.Flap();
             }
         }
 
@@ -64,7 +67,7 @@ public class BirdFlightController : MonoBehaviour
 
         if (visual != null)
         {
-            Quaternion bank = Quaternion.Euler(90f, 0f, -steer * bankAngle);
+            Quaternion bank = Quaternion.Euler(0f, 0f, -steer * bankAngle);
             visual.localRotation = Quaternion.Slerp(
                 visual.localRotation,
                 bank,
@@ -75,6 +78,7 @@ public class BirdFlightController : MonoBehaviour
     public void SetVisual(Transform birdVisual)
     {
         visual = birdVisual;
+        wingMotion = visual != null ? visual.GetComponent<BirdWingMotion>() : null;
     }
 
     public void ResetFlight()
@@ -88,6 +92,7 @@ public class BirdFlightController : MonoBehaviour
         pitchAngle = 0f;
         flapVelocity = 0f;
         nextFlapTime = 0f;
+        if (wingMotion != null) wingMotion.ResetMotion();
         if (visual != null) visual.localRotation = startVisualRotation;
         isFlying = true;
     }
