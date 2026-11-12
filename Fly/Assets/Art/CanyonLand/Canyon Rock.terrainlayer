@@ -7,10 +7,10 @@ TerrainLayer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Canyon Rock
-  m_DiffuseTexture: {fileID: 2800000, guid: 9eb60c3a2a4292e468e6d24649364561, type: 2}
+  m_DiffuseTexture: {fileID: 2800000, guid: da1a1b2b7162b5e44a1e52d99a1cc435, type: 3}
   m_NormalMapTexture: {fileID: 0}
   m_MaskMapTexture: {fileID: 0}
-  m_TileSize: {x: 68, y: 68}
+  m_TileSize: {x: 32, y: 32}
   m_TileOffset: {x: 0, y: 0}
   m_Specular: {r: 0, g: 0, b: 0, a: 0}
   m_Metallic: 0
