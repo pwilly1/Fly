@@ -21541,6 +21541,7 @@ GameObject:
   - component: {fileID: 344265107}
   - component: {fileID: 344265106}
   - component: {fileID: 344265105}
+  - component: {fileID: 344265108}
   m_Layer: 0
   m_Name: Enchanted River
   m_TagString: Untagged
@@ -21620,3 +21621,54 @@ MeshRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &344265108
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 344265104}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c60cd023fdd8ad74998cc19831d1ccc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::RiverPathAuthoring
+  points:
+  - center: {x: -30.777779, y: -6.950732, z: -100}
+    width: 42.555557
+  - center: {x: -27.88889, y: -6.9452386, z: -68}
+    width: 41.22222
+  - center: {x: -24.444445, y: -6.939135, z: -36}
+    width: 44.555553
+  - center: {x: -15, y: -6.92097, z: -4}
+    width: 48.333336
+  - center: {x: -1.333334, y: -6.881807, z: 28}
+    width: 49
+  - center: {x: 17.222223, y: -6.821127, z: 60}
+    width: 47.88889
+  - center: {x: -8.666668, y: -6.7483764, z: 92}
+    width: 46.77778
+  - center: {x: 9.222221, y: -6.185304, z: 124}
+    width: 43
+  - center: {x: 35.444447, y: -1.4087195, z: 156}
+    width: 39.444447
+  - center: {x: 20.777777, y: -1.6475033, z: 188}
+    width: 37.666668
+  - center: {x: -2.8888888, y: -1.7285064, z: 220}
+    width: 37.444443
+  - center: {x: -32.22222, y: -1.713051, z: 252}
+    width: 39.22222
+  - center: {x: -48.22222, y: -1.6965219, z: 284}
+    width: 41.888885
+  - center: {x: -41.666664, y: -1.7984565, z: 316}
+    width: 43.88889
+  - center: {x: -26.444445, y: -0.6494752, z: 348}
+    width: 46.777775
+  - center: {x: -18.666668, y: 4.100943, z: 380}
+    width: 49
+  - center: {x: -14.666668, y: 4.1351485, z: 412}
+    width: 49
+  - center: {x: -2.5555553, y: 4.110742, z: 444}
+    width: 47
+  - center: {x: -1.1111107, y: 4.112126, z: 448}
+    width: 45.88889
