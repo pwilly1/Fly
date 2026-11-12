@@ -7,10 +7,10 @@ TerrainLayer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Grassy Bank
-  m_DiffuseTexture: {fileID: 2800000, guid: 6b9b7b273fcaaef469394191f3c40352, type: 3}
+  m_DiffuseTexture: {fileID: 2800000, guid: 74a9e7c649306504bbd4e3f2401c00ad, type: 3}
   m_NormalMapTexture: {fileID: 0}
   m_MaskMapTexture: {fileID: 0}
-  m_TileSize: {x: 18, y: 18}
+  m_TileSize: {x: 48, y: 48}
   m_TileOffset: {x: 0, y: 0}
   m_Specular: {r: 0, g: 0, b: 0, a: 0}
   m_Metallic: 0
