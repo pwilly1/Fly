@@ -4,7 +4,7 @@ Shader "Fly/Enchanted River"
     {
         _BaseMap ("Painted water", 2D) = "white" {}
         _Tint ("Water tint", Color) = (1, 1, 1, 1)
-        _FlowSpeed ("Flow speed", Range(0, 0.1)) = 0.016
+        _FlowSpeed ("Flow speed", Range(0, 0.1)) = 0.055
     }
     SubShader
     {
@@ -57,7 +57,8 @@ Shader "Fly/Enchanted River"
 
             half4 Frag(Varyings input) : SV_Target
             {
-                float2 flow = float2(0, _Time.y * _FlowSpeed);
+                float ripple = sin(input.uv.y * 9.0 + input.uv.x * 13.0 + _Time.y * 0.9) * 0.012;
+                float2 flow = float2(ripple, _Time.y * _FlowSpeed);
                 half3 painted = SAMPLE_TEXTURE2D(_BaseMap, sampler_BaseMap, input.uv + flow).rgb;
                 half3 detail = SAMPLE_TEXTURE2D(_BaseMap, sampler_BaseMap, input.uv * 1.73 + float2(0.31, -0.17) + flow * 0.55).rgb;
                 half3 water = lerp(painted, detail, 0.18) * _Tint.rgb * input.color.rgb;
