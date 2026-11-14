@@ -38,6 +38,8 @@
 # Unity YAML files
 *.anim                  unity-yaml
 *.asset                 unity-yaml
+# This TerrainData asset is binary and must keep its exact bytes.
+"Fly/Assets/Art/CanyonLand/Broad Canyon Terrain.asset" -text -eol -diff -merge
 *.brush                 unity-yaml
 *.controller            unity-yaml
 *.flare                 unity-yaml
