@@ -4,7 +4,7 @@ public class FollowCamera : MonoBehaviour
 {
     [SerializeField] private Transform target;
     [SerializeField] private float distance = 8f;
-    [SerializeField] private float height = 3f;
+    [SerializeField] private float height = 2f;
     [SerializeField] private float lookAhead = 4f;
     [SerializeField] private float followSharpness = 7f;
 

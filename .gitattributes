@@ -40,6 +40,8 @@
 *.asset                 unity-yaml
 # This TerrainData asset is binary and must keep its exact bytes.
 "Fly/Assets/Art/CanyonLand/Broad Canyon Terrain.asset" -text -eol -diff -merge
+# Outer TerrainData assets are binary too; keep their exact bytes in Git.
+Fly/Assets/Art/CanyonLand/OuterTerrain/*.asset -text -eol -diff -merge
 *.brush                 unity-yaml
 *.controller            unity-yaml
 *.flare                 unity-yaml
